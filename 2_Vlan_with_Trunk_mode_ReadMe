@@ -1,0 +1,65 @@
+VLAN with Trunk Mode
+
+What is Trunking?
+
+A trunk port carries traffic from multiple VLANs between network devices, such as two switches.
+
+
+Trunking allows VLAN 10 and VLAN 20 traffic to travel over a single physical link between the switches.
+
+Why Use Trunking?
+
+* Carries multiple VLANs over one link
+* Connects VLANs across multiple switches
+* Reduces the need for separate physical links
+* Supports scalable network design
+* Uses 802.1Q VLAN tagging to identify VLAN traffic
+
+Configuration
+
+Create VLANs
+
+Switch(config)# vlan 10
+Switch(config-vlan)# name SALES
+Switch(config-vlan)# exit
+
+Switch(config)# vlan 20
+Switch(config-vlan)# name IT
+Switch(config-vlan)# exit
+
+Configure Access Ports
+
+Switch(config)# interface fa0/1
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport access vlan 10
+Switch(config-if)# exit
+
+Configure Trunk Port
+
+Assuming Fa0/24 connects the two switches:
+
+Switch(config)# interface fa0/24
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# exit
+
+Configure the same trunk on the other switch.
+
+Verification
+
+show vlan brief
+show interfaces trunk
+
+show interfaces trunk verifies whether the trunk is active and which VLANs are allowed on it.
+
+Key Concepts
+
+Access Port → Carries traffic for a single VLAN
+
+Trunk Port → Carries traffic for multiple VLANs
+
+802.1Q → VLAN tagging standard used on trunk links
+
+VLAN → Logical Layer 2 network
+
+Native VLAN → VLAN whose frames are sent untagged on an 802.1Q trunk
+
